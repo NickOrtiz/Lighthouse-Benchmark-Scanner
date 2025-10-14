@@ -1,7 +1,6 @@
 // Enhanced Lighthouse Site Benchmark Scanner
 // Main entry point
 
-const chromeLauncher = require('chrome-launcher');
 const fs = require('fs').promises;
 const path = require('path');
 
@@ -26,6 +25,7 @@ async function main() {
   
   // Launch Chrome
   console.log('Launching Chrome...');
+  const chromeLauncher = await import('chrome-launcher');
   const chrome = await chromeLauncher.launch({ chromeFlags: ['--headless'] });
   
   const allResults = [];

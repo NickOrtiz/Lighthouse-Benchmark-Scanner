@@ -2,7 +2,7 @@
 
 // Lighthouse settings for mobile
 const mobileLighthouseFlags = {
-  logLevel: 'info',
+  logLevel: 'error', // Reduced verbosity
   output: 'json',
   onlyCategories: ['performance', 'accessibility', 'best-practices', 'seo'],
   formFactor: 'mobile',

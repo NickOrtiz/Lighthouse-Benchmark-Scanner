@@ -1,12 +1,12 @@
 // Example: Custom test using the modular structure
 const { testUrl } = require('../src/lighthouse');
 const { resultsToCSV } = require('../src/reporting');
-const chromeLauncher = require('chrome-launcher');
 
 async function customTest() {
   console.log('Running custom test...');
   
   // Launch Chrome
+  const chromeLauncher = await import('chrome-launcher');
   const chrome = await chromeLauncher.launch({ chromeFlags: ['--headless'] });
   
   try {

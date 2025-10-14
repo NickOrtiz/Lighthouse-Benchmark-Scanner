@@ -26,6 +26,8 @@ A comprehensive automated performance testing tool for site benchmarking using G
 │   │   └── summary-generator.js  # Summary statistics
 │   └── index.js                  # Main application entry point
 ├── index.js                      # Root entry point
+├── run-scanner.js               # Recommended runner with progress output
+├── sites-config.json            # Site configuration (created automatically)
 ├── package.json                  # Dependencies and scripts
 └── README.md                     # This file
 ```
@@ -57,7 +59,7 @@ npm run install-chrome
 
 ## Usage
 
-1. Create a `sites-config.json` file (template will be created automatically on first run):
+1. **Configure your sites** by editing `sites-config.json`:
 ```json
 {
   "sites": [
@@ -69,31 +71,79 @@ npm run install-chrome
         "single": "https://example.com/blog/post",
         "archive": "https://example.com/blog"
       }
+    },
+    {
+      "name": "Competitor Site",
+      "type": "competitor",
+      "urls": {
+        "homepage": "https://competitor.com"
+      }
     }
   ]
 }
 ```
 
-2. Run the scanner:
+2. **Run the scanner** (recommended method with progress output):
 ```bash
+node run-scanner.js
+```
+
+**Alternative methods:**
+```bash
+# Direct execution (may not show progress)
+node index.js
+
+# Using npm scripts
 npm start
-# or
 npm run dev
 ```
 
 ## Configuration
 
-Edit `src/config/index.js` to modify:
-- Number of runs per URL
-- Output directory
-- Device testing (mobile/desktop)
-- Additional analysis features
+### Main Configuration (`src/config/index.js`)
+Edit to modify:
+- **runsPerUrl**: Number of test runs per URL (default: 3)
+- **outputDir**: Where to save results (default: `./lighthouse-results`)
+- **testBothDevices**: Test mobile and desktop (default: true)
+- **includeSecurityHeaders**: Check security headers (default: true)
+- **includeCarbonFootprint**: Calculate carbon footprint (default: true)
+
+### Site Configuration (`sites-config.json`)
+- **name**: Display name for the site
+- **type**: "own" or "competitor" (affects reporting)
+- **urls**: Object with page types and URLs to test
+  - `homepage`: Main page URL
+  - `single`: Single page/post URL (optional)
+  - `archive`: Archive/listing page URL (optional)
+
+### Lighthouse Configuration (`src/config/lighthouse-flags.js`)
+- Device-specific settings (mobile/desktop)
+- Throttling conditions
+- Screen emulation settings
+- Log verbosity levels
 
 ## Output
 
 Results are saved to the `lighthouse-results/` directory:
-- `benchmark-YYYY-MM-DD.csv` - Detailed CSV report
-- `benchmark-YYYY-MM-DD.json` - Raw JSON data
+- **`benchmark-YYYY-MM-DD.csv`** - Detailed CSV report with all metrics
+- **`benchmark-YYYY-MM-DD.json`** - Raw JSON data for programmatic use
+
+### CSV Report Columns
+- Site information (name, type, URL)
+- Performance scores (mobile/desktop)
+- Core Web Vitals (LCP, CLS, TBT, FCP, TTI)
+- Resource usage (total size, requests, JS/CSS/Image sizes)
+- Coverage analysis (unused JS/CSS percentages)
+- Issue counts by category
+- Security headers score
+- Carbon footprint data
+
+### Console Output
+When using `node run-scanner.js`, you'll see:
+- Real-time progress updates
+- Test completion status
+- Error messages (if any)
+- Final summary statistics
 
 ## Module Overview
 
@@ -123,6 +173,26 @@ The modular structure makes it easy to:
 - Modify Lighthouse configurations in `src/config/lighthouse-flags.js`
 - Extend reporting formats in `src/reporting/`
 - Add new test types in `src/lighthouse/`
+
+## Troubleshooting
+
+### Console Output Not Showing
+If `node index.js` runs silently without showing progress:
+- Use `node run-scanner.js` instead for real-time output
+- Check the `lighthouse-results/` directory for generated files
+- The scanner may still be running in the background
+
+### Coverage Analysis Errors
+If you see "Navigating frame was detached" errors:
+- This is handled gracefully and won't stop the scanner
+- Coverage data may show zeros for affected sites
+- All other metrics will still be collected
+
+### Performance Issues
+To speed up testing:
+- Reduce `runsPerUrl` in `src/config/index.js` (default: 3)
+- Set `testBothDevices: false` to test only mobile
+- Reduce verbosity by setting `logLevel: 'error'` in lighthouse flags
 
 ## Dependencies
 
