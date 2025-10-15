@@ -108,6 +108,7 @@ coverage
 # Lighthouse results
 lighthouse-results/
 *.json
+!package.json
 *.csv
 
 # Sites configuration (contains sensitive URLs)

@@ -1,0 +1,41 @@
+{
+  "name": "lighthouse-benchmark-scanner",
+  "version": "2.0.0",
+  "description": "Comprehensive automated performance testing for site benchmarking",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node index.js",
+    "test:mobile": "node index.js --mobile-only",
+    "install-chrome": "node node_modules/puppeteer/install.js",
+    "dev": "node src/index.js"
+  },
+  "dependencies": {
+    "lighthouse": "^11.4.0",
+    "chrome-launcher": "^1.1.0",
+    "puppeteer": "^21.6.0",
+    "axios": "^1.6.2"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "lighthouse",
+    "performance",
+    "benchmarking",
+    "web-vitals",
+    "accessibility",
+    "seo"
+  ],
+  "author": "Your Name <your.email@example.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/lighthouse-benchmark-scanner.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/lighthouse-benchmark-scanner/issues"
+  },
+  "homepage": "https://github.com/yourusername/lighthouse-benchmark-scanner#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
