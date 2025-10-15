@@ -7,7 +7,7 @@
     "start": "node index.js",
     "test": "node index.js",
     "test:mobile": "node index.js --mobile-only",
-    "install-chrome": "node node_modules/puppeteer/install.js",
+    "install-chrome": "node node_modules/puppeteer/install.mjs",
     "dev": "node src/index.js"
   },
   "dependencies": {
